@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        SONAR_TOKEN = credentials('sonar1')
+    }
+
     stages {
 
         stage('Clone') {
@@ -11,17 +15,18 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn -B clean package -DskipTests'
+                sh 'mvn clean package -DskipTests'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonartest') {
-                    sh '''
+                    sh """
                         mvn sonar:sonar \
-                        -Dsonar.projectKey=ProjetStudentsManagement
-                    '''
+                        -Dsonar.projectKey=ProjetStudentsManagement \
+                        -Dsonar.token=${SONAR_TOKEN}
+                    """
                 }
             }
         }
