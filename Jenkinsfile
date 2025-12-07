@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SONAR_TOKEN = credentials('sonar22')
+        SONAR_TOKEN = credentials('sonar22') // ID de ton token Jenkins
     }
 
     stages {
@@ -23,9 +23,9 @@ pipeline {
                 withSonarQubeEnv('SonarAnalyse') {
                     sh """
                         mvn sonar:sonar \
-                        -Dsonar.projectKey=ProjetStudentsManagement \
-                        -Dsonar.host.url=\${SONAR_HOST_URL} \
-                        -Dsonar.login=${SONAR_TOKEN}
+                            -Dsonar.projectKey=ProjetStudentsManagement \
+                            -Dsonar.host.url=\$SONAR_HOST_URL \
+                            -Dsonar.login=\$SONAR_TOKEN
                     """
                 }
             }
