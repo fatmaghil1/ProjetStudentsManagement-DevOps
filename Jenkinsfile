@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        SONAR_TOKEN = credentials('sonar22') // ID de ton token Jenkins
+        // Injecte le token depuis Jenkins Credentials
+        SONAR_TOKEN = credentials('sonar22')
     }
 
     stages {
@@ -21,6 +22,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarAnalyse') {
+                    // Utilisation de """ et $VAR pour interpolation Shell correcte
                     sh """
                         mvn sonar:sonar \
                             -Dsonar.projectKey=ProjetStudentsManagement \
