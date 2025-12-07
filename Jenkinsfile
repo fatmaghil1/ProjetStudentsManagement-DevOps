@@ -6,7 +6,6 @@ pipeline {
     }
 
     stages {
-
         stage('Clone') {
             steps {
                 checkout scm
@@ -15,7 +14,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh 'mvn -B clean package -DskipTests'
             }
         }
 
@@ -25,7 +24,8 @@ pipeline {
                     sh """
                         mvn sonar:sonar \
                         -Dsonar.projectKey=ProjetStudentsManagement \
-                        -Dsonar.token=${SONAR_TOKEN}
+                        -Dsonar.host.url=\${SONAR_HOST_URL} \
+                        -Dsonar.login=${SONAR_TOKEN}
                     """
                 }
             }
