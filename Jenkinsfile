@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SONAR_TOKEN = credentials('sonar2')
+        SONAR_TOKEN = credentials('sonar22')
     }
 
     stages {
@@ -20,7 +20,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonartest') {
+                withSonarQubeEnv('SonarAnalyse') {
                     sh """
                         mvn sonar:sonar \
                         -Dsonar.projectKey=ProjetStudentsManagement \
