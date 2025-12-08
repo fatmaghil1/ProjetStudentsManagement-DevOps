@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Injecte le token depuis Jenkins Credentials
-        SONAR_TOKEN = credentials('sonar22')
+        SONAR_TOKEN = credentials('sonar23')
     }
 
     stages {
