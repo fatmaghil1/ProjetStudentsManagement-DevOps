@@ -15,15 +15,10 @@ spec:
     spec:
       initContainers:
         - name: wait-for-mysql
-          image: busybox:1.35
-          command:
+          image: busybox:          command:
             - sh
             - -c
-            - |
-              until nc -z mysql-service 3306; do
-                echo "waiting for mysql..."
-                sleep 5
-              done
+            - until nc -z mysql-service 3306; do echo waiting for mysql; sleep 3; done
       containers:
         - name: stationskicontainer
           image: leila1312/stationski:latest
@@ -31,10 +26,8 @@ spec:
           ports:
             - containerPort: 8089
           env:
-            - name: SERVER_PORT
-              value: "8089"
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://mysql-service:3306/testdb?useSSL=false&allowPublicKeyRetrieval=true
+              value: jdbc:mysql://mysql-service:3306/testdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
             - name: SPRING_DATASOURCE_USERNAME
               value: root
             - name: SPRING_DATASOURCE_PASSWORD
@@ -42,7 +35,6 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: mysql-root-password
-
 ---
 apiVersion: v1
 kind: Service
@@ -57,4 +49,3 @@ spec:
     - port: 8089
       targetPort: 8089
       nodePort: 32639
-
