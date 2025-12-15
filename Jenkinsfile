@@ -41,6 +41,12 @@ pipeline {
             }
         }
     }
+    stage('Build Docker Image') {
+        steps {
+            sh 'docker build -t fatmaghiloufi/students-management:1.0 .'
+            sh 'docker push fatmaghiloufi/students-management:1.0'
+        }
+    }
 
     post {
         success {
